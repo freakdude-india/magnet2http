@@ -8,4 +8,5 @@ An unltra simple and lightweight web app that can convert magnet links into down
 # INSTALLATION-Locally
 
 1) Clone the github repo using git clone ```https://github.com/freakdude-india/streamify-magnet```
+2) Make sure you have node.js and npmlatest version installed.If not then <a href="">click here<</a> to follow this installation guide.
 
