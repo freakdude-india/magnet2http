@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torrent Downloader</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex justify-center items-center h-screen bg-gray-100">
+    <div class="p-6 bg-white border rounded shadow max-w-xl w-full">
+        <div class="mb-8 text-red-500">
+            <p>Important Instructions:</p>
+            <ul class="list-disc ml-6 mt-2">
+                <li>Only magnet links (not torrent download links) are supported at the moment.</li>
+                <li>Please download files one by one. For multifile torrents, do not attempt to download more than one at a time.It will return an error.</li>
+                <li>Please wait some time after hitting the download button.</li>
+            </ul>
+        </div>
+        <form id="torrentForm" class="mb-4">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="magnetLink">
+                    Magnet Link
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="magnetLink" name="magnetLink" type="text" placeholder="Enter Magnet Link">
+            </div>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Submit
+            </button>
+        </form>
+        <div id="fileList" class="hidden">
+            <h2 class="text-xl font-bold mb-2">Select Files to Download</h2>
+            <ul id="files"></ul>
+            <button id="downloadButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                Download Selected Files
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('torrentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const magnetLink = document.getElementById('magnetLink').value;
+
+            // Send a POST request to the backend
+            fetch('/upload', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `magnetLink=${encodeURIComponent(magnetLink)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                const fileListElement = document.getElementById('files');
+                const downloadButton = document.getElementById('downloadButton');
+                const fileList = data.files;
+
+                // Display the list of files
+                fileListElement.innerHTML = fileList.map(file => {
+                    return `
+                        <li>
+                            <label class="flex items-center cursor-pointer">
+                                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" data-index="${file.index}">
+                                <span class="ml-2 text-gray-700">${file.name} (${(file.length / (1024 * 1024)).toFixed(2)} MB)</span>
+                            </label>
+                        </li>
+                    `;
+                }).join('');
+
+                // Show the file list
+                document.getElementById('fileList').classList.remove('hidden');
+
+                // Listen for download button click
+                downloadButton.addEventListener('click', function() {
+                    const selectedFiles = Array.from(fileListElement.querySelectorAll('input[type="checkbox"]:checked'))
+                        .map(input => parseInt(input.dataset.index, 10));
+
+                    // Redirect to the download page with selected file indices and magnetLink
+                    const selectedFilesQueryParam = selectedFiles.map(index => `selectedFiles=${index}`).join('&');
+                    window.location.href = `/download?magnetLink=${encodeURIComponent(magnetLink)}&${selectedFilesQueryParam}`;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
