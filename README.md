@@ -32,6 +32,9 @@ Email:gogomedia365@gmail.com to join the developement process.
 
 # SCREENSHOTS
 <img title="Web UI" alt="Web UI" src="https://raws.seedhost.online/Screenshot%20from%202023-09-10%2023-20-55.png"><img title="Web UI" alt="Web UI" src="https://raws.seedhost.online/Screenshot%20from%202023-09-10%2023-33-20.png">
+# VIDEO GUIDE
+[![Watch the video](https://i.stack.imgur.com/Vp2cE.png)](https://raws.seedhost.online/Screencast%20from%2010-09-23%2011%3A48%3A30%20PM%20IST.webm)
+
 
 
 
