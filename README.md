@@ -30,10 +30,6 @@ Email:gogomedia365@gmail.com to join the developement process.
 1) https://github.com/mafintosh/torrent-stream
 2) https://github.com/mafintosh/peerflix
 
-# SCREENSHOTS
-<img title="Web UI" alt="Web UI" src="https://raws.seedhost.online/Screenshot%20from%202023-09-10%2023-20-55.png"><img title="Web UI" alt="Web UI" src="https://raws.seedhost.online/Screenshot%20from%202023-09-10%2023-33-20.png">
-# VIDEO GUIDE
-https://raws.seedhost.online/Screencast%20from%2010-09-23%2011%3A48%3A30%20PM%20IST.webm
 
 
 
