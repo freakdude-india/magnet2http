@@ -16,7 +16,12 @@ An ultra simple and lightweight web app that can convert magnet links into downl
 7) Web UI should be live on ```http://localhost:3000/```
 
 # SERVER DEPLOYMENT
-Coming soon...
+1)Buy a vps with at least 1vcpu+2gb Ram+20gb ssd/deploy on aws,gcp,azure free trial.
+2)ssh into the vps and follow all steps mentioned in local installation.
+3)Open networking interface in vps control panel and edit firewall rules to allow all TCP requests through port 80 and 443.(Cause we will be deploying this on port 80 and https server will be live on port 443)
+4)Install pm2 by `npm install -g pm2` command.
+5)Execute `pm2 start server.js` and `pm2 start http-redirect.js`(last one is optional only for https force redirect, may cause deployment issues)
+6)
 
 # HELP
 Report errors by creating issue here.<br/>
