@@ -1,9 +1,5 @@
 # streamify-magnet
 An ultra simple and lightweight web app that can convert magnet links into downloadable http stream.
-# Live demo:
-Server online on https- https://cdn.seedhost.online.
-<b>This is deployed on 12GB RAM + 4 INTEL XEON Vcpu + 500 GB HDD +15 TB TRAFFIC@1GBPS (Pretty hard core)</b><br>
-<b>So feel free to use it but please dont overload it</b>
 # USAGE-FEATURES
 1) An extremely lightweight web app with node.js backend which can convert magnet link into direct download links.<br/>
 2) Shows the list of files in case of multifile torrents~select the file to download.<br/>
