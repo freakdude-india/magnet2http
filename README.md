@@ -12,7 +12,7 @@ An ultra simple and lightweight web app that can convert magnet links into downl
 3) The project should be cloned in ```sreamify-magnet``` directory, enter ```cd streamify-magnet``` to enter into that directory.
 4) Enter ```sudo su``` and enter your password to get sudo  access, not necessary  if you are using ```sudo -i``` from beginning.
 5) Then enter ```npm install``` to install required modules.
-6) Enter ```node index.js``` to run server.
+6) Enter ```node server.js``` to run server.
 7) Web UI should be live on ```http://localhost:3000/```
 
 # SERVER DEPLOYMENT
