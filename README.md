@@ -16,12 +16,26 @@ An ultra simple and lightweight web app that can convert magnet links into downl
 7) Web UI should be live on ```http://localhost:3000/```
 
 # SERVER DEPLOYMENT
-1)Buy a vps with at least 1vcpu+2gb Ram+20gb ssd/deploy on aws,gcp,azure free trial.
-2)ssh into the vps and follow all steps mentioned in local installation.
-3)Open networking interface in vps control panel and edit firewall rules to allow all TCP requests through port 80 and 443.(Cause we will be deploying this on port 80 and https server will be live on port 443)
-4)Install pm2 by `npm install -g pm2` command.
-5)Execute `pm2 start server.js` and `pm2 start http-redirect.js`(last one is optional only for https force redirect, may cause deployment issues)
-6)
+1)Buy a vps with at least 1vcpu+2gb Ram+20gb ssd/deploy on aws,gcp,azure free trial.<br>
+2)ssh into the vps and follow all steps mentioned in local installation.<br>
+3)Open networking interface in vps control panel and edit firewall rules to allow all TCP requests through port 80 and 443.(Cause we will be deploying this on port 80 and https server will be live on port 443)<br>
+4)Install pm2 by `npm install -g pm2` command.<br>
+5)Execute `pm2 start server.js` and `pm2 start http-redirect.js`(last one is optional only for https force redirect, may cause deployment issues)<br>
+6)Now your server is live and daemonized.<br>
+
+# <b>SSL access</b>
+Follow these steps to get free letsencrypt ssl.First add an `A` record in your domain registerer's DNS panel pointing to your vps IP.Google it if you don't know how to do it.<br>
+1)`apt-get install certbot`<br>
+2)`sudo certbot certonly --manual --preferred-challenges=dns -d yourdomain.com`--here replace `yourdomain.com` with your actual domain name.
+3)now install nano text editor `apt-get install nano`.<br>
+4)`nano server.js`
+5)`const privateKey = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');<br>
+const certificate = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8');<br>
+const ca = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/chain.pem', 'utf8');`<br>
+access this part in `server.js` and replace `yourdomain.com` with actual domain name. Enter `ctrl+x` then `y` and `Enter`.
+6)Now again `pm2 start server.js` and `pm2 start http-redirect.js` and then `pm2 save` next `pm2 startup`.
+Now the webapp should be on https.
+
 
 # HELP
 Report errors by creating issue here.<br/>
