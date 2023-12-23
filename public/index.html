@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torrent Stream Downloader</title>
+    <!-- Include Tailwind CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <style>
+        /* Additional styles specific to this page (if needed) */
+        .instructions-box {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="max-w-md w-full p-6 bg-white rounded-md shadow-md">
+        <!-- Instructions Box -->
+        <div class="instructions-box">
+            <strong class="text-red-700">Instructions before you use it:</strong><br>
+            <ul>
+                <li>After selecting the files and hitting the download button, please wait some time (30s-max 1 min). Sorry but these are torrents, not some files stored on the server; so initiating the process takes time. But once you hit download, it will be downloaded.</li>
+                <li>Please use torrents with a good number of seeders.</li>
+            </ul>
+        </div>
+
+        <!-- Torrent Form -->
+        <form id="torrentForm" class="mb-8">
+            <div class="mb-4">
+                <label for="magnetLink" class="block text-sm font-medium text-gray-700">Magnet Link:</label>
+                <input type="text" class="mt-1 p-2 w-full border rounded-md" id="magnetLink" name="magnetLink" required>
+            </div>
+            <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Submit</button>
+        </form>
+
+        <!-- File List and Download Button -->
+        <div id="fileList"></div>
+        <button id="downloadButton" class="px-4 py-2 bg-green-500 text-white rounded-md" style="display:none;">Download Selected</button>
+    
+        <!-- Buttons at the Bottom of the Page -->
+        <div class="flex justify-center space-x-4 mt-4">
+            <a href="dmca.html" class="px-4 py-2 bg-red-500 text-white rounded-md">DMCA</a>
+            <a href="guide.html" class="px-4 py-2 bg-gray-700 text-white rounded-md">USAGE GUIDE</a>
+            <a href="donation.html" class="px-4 py-2 bg-blue-500 text-white rounded-md">DONATE</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('torrentForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const magnetLink = document.getElementById('magnetLink').value;
+
+            fetch('/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    magnetLink: magnetLink
+                })
+            })
+            .then(response => response.json())
+            .then(files => {
+                const fileListDiv = document.getElementById('fileList');
+                fileListDiv.innerHTML = '';
+
+                files.forEach(file => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = 'files';
+                    checkbox.value = file.name;
+
+                    const label = document.createElement('label');
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(file.name));
+
+                    fileListDiv.appendChild(label);
+                    fileListDiv.appendChild(document.createElement('br'));
+                });
+
+                const downloadButton = document.getElementById('downloadButton');
+                downloadButton.style.display = 'block';
+            });
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', function () {
+            const selectedFiles = Array.from(document.querySelectorAll('input[name="files"]:checked'))
+                .map(checkbox => checkbox.value);
+
+            if (selectedFiles.length === 0) {
+                alert('Select at least one file to download.');
+                return;
+            }
+
+            const magnetLink = document.getElementById('magnetLink').value;
+
+            selectedFiles.forEach(fileName => {
+                const downloadUrl = `/download/${encodeURIComponent(fileName)}?magnetLink=${encodeURIComponent(magnetLink)}`;
+
+                // Create a hidden link and trigger the download
+                const downloadLink = document.createElement('a');
+                downloadLink.href = downloadUrl;
+                downloadLink.download = fileName;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
+        });
+    </script>
+</body>
+</html>
