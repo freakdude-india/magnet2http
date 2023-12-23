@@ -13,7 +13,7 @@ An ultra simple and lightweight web app that can convert magnet links into downl
 4) Enter ```sudo su``` and enter your password to get sudo  access, not necessary  if you are using ```sudo -i``` from beginning.
 5) Then enter ```npm install``` to install required modules.
 6) Enter ```node server.js``` to run server.
-7) Web UI should be live on ```http://localhost:3000/```
+7) Web UI should be live on ```http://localhost:80/```
 
 # SERVER DEPLOYMENT
 1)Buy a vps with at least 1vcpu+2gb Ram+20gb ssd/deploy on aws,gcp,azure free trial.<br>
