@@ -1,0 +1,28 @@
+{
+  "name": "torserver",
+  "version": "1.0.0",
+  "description": "A light node server to directly fetch files from torrents and convert them to http stream.",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freakdude-india/streamify-magnet.git"
+  },
+  "author": "Rudran-Bera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/freakdude-india/streamify-magnet/issues"
+  },
+  "homepage": "https://github.com/freakdude-india/streamify-magnet#readme",
+  "keywords": [],
+  "dependencies": {
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "path": "^0.12.7",
+    "torrent-stream": "^1.2.1"
+  },
+  "devDependencies": {}
+}
