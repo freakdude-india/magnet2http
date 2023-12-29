@@ -29,8 +29,8 @@ Follow these steps to get free letsencrypt ssl.First add an `A` record in your d
 2)`sudo certbot certonly --manual --preferred-challenges=dns -d yourdomain.com`--here replace `yourdomain.com` with your actual domain name.<br>
 3)now install nano text editor `apt-get install nano`.<br>
 4)`nano server.js`<br>
-5)`const privateKey = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');<br>
-const certificate = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8');<br>
+5)`const privateKey = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8');
 const ca = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/chain.pem', 'utf8');`<br>
 access this part in `server.js` and replace `yourdomain.com` with actual domain name. Enter `ctrl+x` then `y` and `Enter`.<br>
 6)Now again `pm2 start server.js` and `pm2 start http-redirect.js` and then `pm2 save` next `pm2 startup`.<br>
